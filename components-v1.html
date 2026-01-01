@@ -1514,6 +1514,61 @@
         .mt-4 { margin-top: 2rem; }
         .mb-4 { margin-bottom: 2rem; }
         
+
+        /* レスポンシブ対応（学習統計と色変化システム） */
+        @media (max-width: 768px) {
+            /* 学習統計: Hero Stats を1カラムに */
+            section:nth-of-type(12) .component-demo > div > div:first-child {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* 学習統計: Stats Panel の最小幅を調整 */
+            section:nth-of-type(12) .component-demo > div > div:nth-child(2) {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+            }
+
+            /* 色変化システム: カラースウォッチの最小幅を調整 */
+            section:nth-of-type(13) .component-demo > div > div:first-child {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) !important;
+            }
+
+            /* フォントサイズ調整 */
+            section:nth-of-type(12) div[style*="font-size: 3rem"] {
+                font-size: 2rem !important;
+            }
+
+            section:nth-of-type(12) div[style*="font-size: 2rem"] {
+                font-size: 1.5rem !important;
+            }
+
+            /* パディング調整 */
+            section:nth-of-type(12) .component-demo > div,
+            section:nth-of-type(13) .component-demo > div {
+                padding: 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* さらに小さい画面: Stats Panel を1カラムに */
+            section:nth-of-type(12) .component-demo > div > div:nth-child(2) {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* 色変化システム: カラースウォッチを2カラムに */
+            section:nth-of-type(13) .component-demo > div > div:first-child {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            /* Hero Stats のパディング削減 */
+            section:nth-of-type(12) div[style*="padding: 2rem"] {
+                padding: 1rem !important;
+            }
+
+            /* 大きな数字のサイズをさらに調整 */
+            section:nth-of-type(12) div[style*="font-size: 3rem"] {
+                font-size: 1.75rem !important;
+            }
+        }
         </style>
     </head>
     <body class="theme-purple mode-light">
