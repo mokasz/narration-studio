@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anki Marker - Wireframes & Demos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .demo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .demo-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .demo-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .demo-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .demo-features li {
+            padding: 10px 0;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+
+        .demo-features li::before {
+            content: "✓";
+            color: #34d399;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .demo-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .demo-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+
+        .demo-link:active {
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 40px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .demos-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .demo-card {
+                padding: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Anki Marker</h1>
+            <p class="subtitle">Wireframes & Interactive Demos</p>
+        </header>
+
+        <div class="demos-grid">
+            <!-- コンポーネントライブラリデモ -->
+            <div class="demo-card">
+                <div class="demo-icon">🎨</div>
+                <h2 class="demo-title">Component Library</h2>
+                <p class="demo-description">
+                    マーカー機能の全コンポーネントとアニメーションを網羅した静的デモライブラリです。
+                    デザインシステムの確認や、各種アニメーションの動作を視覚的に確認できます。
+                </p>
+                <ul class="demo-features">
+                    <li>13セクションの包括的なコンポーネント集</li>
+                    <li>マーカー作成・選択・透明化アニメーション</li>
+                    <li>判定ボタン・エラー表示の各種パターン</li>
+                    <li>Konva.js vs Moveable.js の比較</li>
+                    <li>アクセシビリティ・パフォーマンス実装例</li>
+                </ul>
+                <a href="./components-v1.html" class="demo-link">デモを見る →</a>
+            </div>
+
+            <!-- インタラクティブデモ -->
+            <div class="demo-card">
+                <div class="demo-icon">✨</div>
+                <h2 class="demo-title">Interactive Demo</h2>
+                <p class="demo-description">
+                    実際のマーカー機能を体験できるインタラクティブデモです。
+                    PC/スマホ両対応で、ドラッグ操作やリサイズ機能を実際に試せます。
+                </p>
+                <ul class="demo-features">
+                    <li>ドラッグでマーカー作成（最小5px/20px）</li>
+                    <li>8方向リサイズハンドル（16px/44px）</li>
+                    <li>マーカー選択・移動・透明化</li>
+                    <li>正解/不正解判定ボタン</li>
+                    <li>PC/スマホ完全対応（Pointer Events API）</li>
+                    <li>グラスモーフィズム・グロー効果</li>
+                </ul>
+                <a href="./marker-drag-demo.html" class="demo-link">デモを試す →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Anki Marker Phase 1 - Wireframes & Prototypes</p>
+        </footer>
+    </div>
+</body>
+</html>

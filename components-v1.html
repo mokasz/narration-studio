@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Anki Marker - Component Library v1</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- Purple: Plus Jakarta Sans + DM Sans -->
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+        <!-- Coral: Poppins + Inter -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <!-- Japanese -->
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+        <style>
+            /* ========================================
+           THEME: PURPLE - LIGHT MODE
+        ======================================== */
+        body.theme-purple.mode-light {
+            --primary: #a855f7;
+            --primary-dark: #9333ea;
+            --primary-light: #c084fc;
+            --accent: #e729ff;
+            --accent-dark: #c026d3;
+            --accent-secondary: #84cc16;
+
+            --bg-base: #fafaf8;
+            --bg-elevated: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
+            --bg-hover: #f5f3ff;
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --text-on-primary: #ffffff;
+
+            --border: #e5e7eb;
+            --border-light: #f3f4f6;
+            --border-focus: #a855f7;
+
+            --success: #84cc16;
+            --success-bg: #f0fdf4;
+            --warning: #f59e0b;
+            --warning-bg: #fffbeb;
+            --error: #ef4444;
+            --error-bg: #fef2f2;
+            --info: #06b6d4;
+            --info-bg: #f0fdfa;
+
+            --shadow: 0 1px 3px rgba(168, 85, 247, 0.1), 0 1px 2px rgba(168, 85, 247, 0.06);
+            --shadow-md: 0 4px 6px rgba(168, 85, 247, 0.12), 0 2px 4px rgba(168, 85, 247, 0.08);
+            --shadow-lg: 0 10px 15px rgba(168, 85, 247, 0.15), 0 4px 6px rgba(168, 85, 247, 0.1);
+
+            --font-heading: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+            --font-body: 'DM Sans', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ========================================
+           THEME: PURPLE - DARK MODE
+        ======================================== */
+        body.theme-purple.mode-dark {
+            --primary: #c084fc;
+            --primary-dark: #a855f7;
+            --primary-light: #e9d5ff;
+            --accent: #f0abfc;
+            --accent-dark: #e879f9;
+            --accent-secondary: #a3e635;
+
+            --bg-base: #0a0a0a;
+            --bg-elevated: #1a1a1a;
+            --bg-overlay: rgba(0, 0, 0, 0.8);
+            --bg-hover: #2d1b4e;
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --text-on-primary: #0a0a0a;
+
+            --border: #2d2d2d;
+            --border-light: #262626;
+            --border-focus: #c084fc;
+
+            --success: #a3e635;
+            --success-bg: #1a2e05;
+            --warning: #fbbf24;
+            --warning-bg: #2e1f05;
+            --error: #f87171;
+            --error-bg: #2e0505;
+            --info: #22d3ee;
+            --info-bg: #052e2e;
+
+            --shadow: 0 1px 3px rgba(192, 132, 252, 0.2), 0 1px 2px rgba(192, 132, 252, 0.15);
+            --shadow-md: 0 4px 6px rgba(192, 132, 252, 0.25), 0 2px 4px rgba(192, 132, 252, 0.2);
+            --shadow-lg: 0 10px 15px rgba(192, 132, 252, 0.3), 0 4px 6px rgba(192, 132, 252, 0.25);
+
+            --font-heading: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+            --font-body: 'DM Sans', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ========================================
+           THEME: CORAL - LIGHT MODE
+        ======================================== */
+        body.theme-coral.mode-light {
+            --primary: #f97316;
+            --primary-dark: #ea580c;
+            --primary-light: #fb923c;
+            --accent: #ec4899;
+            --accent-dark: #db2777;
+            --accent-secondary: #06b6d4;
+
+            --bg-base: #fafaf8;
+            --bg-elevated: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
+            --bg-hover: #fff7ed;
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --text-on-primary: #ffffff;
+
+            --border: #e5e7eb;
+            --border-light: #f3f4f6;
+            --border-focus: #f97316;
+
+            --success: #06b6d4;
+            --success-bg: #f0fdfa;
+            --warning: #f59e0b;
+            --warning-bg: #fffbeb;
+            --error: #ef4444;
+            --error-bg: #fef2f2;
+            --info: #3b82f6;
+            --info-bg: #eff6ff;
+
+            --shadow: 0 1px 3px rgba(249, 115, 22, 0.1), 0 1px 2px rgba(249, 115, 22, 0.06);
+            --shadow-md: 0 4px 6px rgba(249, 115, 22, 0.12), 0 2px 4px rgba(249, 115, 22, 0.08);
+            --shadow-lg: 0 10px 15px rgba(249, 115, 22, 0.15), 0 4px 6px rgba(249, 115, 22, 0.1);
+
+            --font-heading: 'Poppins', 'Noto Sans JP', sans-serif;
+            --font-body: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ========================================
+           THEME: CORAL - DARK MODE
+        ======================================== */
+        body.theme-coral.mode-dark {
+            --primary: #fb923c;
+            --primary-dark: #f97316;
+            --primary-light: #fdba74;
+            --accent: #f472b6;
+            --accent-dark: #ec4899;
+            --accent-secondary: #22d3ee;
+
+            --bg-base: #0a0a0a;
+            --bg-elevated: #1a1a1a;
+            --bg-overlay: rgba(0, 0, 0, 0.8);
+            --bg-hover: #2e1f0f;
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --text-on-primary: #0a0a0a;
+
+            --border: #2d2d2d;
+            --border-light: #262626;
+            --border-focus: #fb923c;
+
+            --success: #22d3ee;
+            --success-bg: #052e2e;
+            --warning: #fbbf24;
+            --warning-bg: #2e1f05;
+            --error: #f87171;
+            --error-bg: #2e0505;
+            --info: #60a5fa;
+            --info-bg: #05162e;
+
+            --shadow: 0 1px 3px rgba(251, 146, 60, 0.2), 0 1px 2px rgba(251, 146, 60, 0.15);
+            --shadow-md: 0 4px 6px rgba(251, 146, 60, 0.25), 0 2px 4px rgba(251, 146, 60, 0.2);
+            --shadow-lg: 0 10px 15px rgba(251, 146, 60, 0.3), 0 4px 6px rgba(251, 146, 60, 0.25);
+
+            --font-heading: 'Poppins', 'Noto Sans JP', sans-serif;
+            --font-body: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ========================================
+           BASE STYLES
+        ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .nav-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .nav-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: var(--text-on-primary);
+            border-color: var(--primary);
+        }
+
+        .mode-toggle {
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: var(--text-on-primary);
+            border: 2px solid var(--primary);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ========================================
+           CONTENT
+        ======================================== */
+        .content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+
+        .component-group {
+            margin-bottom: 4rem;
+        }
+
+        .component-group h2 {
+            font-size: 1.875rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .component-demo {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+        }
+
+        .component-demo h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .demo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .demo-row:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ========================================
+           BUTTONS
+        ======================================== */
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Sizes */
+        .btn-sm {
+            padding: 0.375rem 0.875rem;
+            font-size: 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .btn-md {
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-lg {
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+        }
+
+        /* Variants */
+        .btn-primary {
+            background: var(--primary);
+            color: var(--text-on-primary);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--text-on-primary);
+        }
+
+        .btn-accent:hover:not(:disabled) {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            background: var(--primary);
+            color: var(--text-on-primary);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        .btn-ghost:hover:not(:disabled) {
+            background: var(--bg-hover);
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: var(--text-on-primary);
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--text-on-primary);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            filter: brightness(0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ========================================
+           CARDS
+        ======================================== */
+        .card {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .card-elevated {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-elevated:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-flat {
+            box-shadow: none;
+        }
+
+        .card-outlined {
+            border: 2px solid var(--border);
+            box-shadow: none;
+        }
+
+        .card-outlined:hover {
+            border-color: var(--primary);
+        }
+
+        .card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-size: 1.125rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* ========================================
+           FORM ELEMENTS
+        ======================================== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(var(--primary), 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Checkbox & Radio */
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .form-check input[type="checkbox"],
+        .form-check input[type="radio"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .form-check label {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border);
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* ========================================
+           MODAL / DIALOG
+        ======================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-overlay);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* ========================================
+           TOAST NOTIFICATIONS
+        ======================================== */
+        .toast-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 10000;
+        }
+
+        .toast {
+            background: var(--bg-elevated);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 300px;
+            border-left: 4px solid;
+        }
+
+        .toast-success {
+            border-color: var(--success);
+            background: var(--success-bg);
+        }
+
+        .toast-warning {
+            border-color: var(--warning);
+            background: var(--warning-bg);
+        }
+
+        .toast-error {
+            border-color: var(--error);
+            background: var(--error-bg);
+        }
+
+        .toast-info {
+            border-color: var(--info);
+            background: var(--info-bg);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-message {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           NAVIGATION ELEMENTS
+        ======================================== */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-muted);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.25rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            margin-bottom: -2px;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* ========================================
+           BADGES & TAGS
+        ======================================== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: var(--text-on-primary);
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: var(--text-on-primary);
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: var(--text-on-primary);
+        }
+
+        .badge-error {
+            background: var(--error);
+            color: var(--text-on-primary);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .tag-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 0;
+            font-size: 1rem;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .tag-close:hover {
+            color: var(--error);
+        }
+
+        /* ========================================
+           PROGRESS BAR
+        ======================================== */
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: var(--border-light);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+        }
+
+        /* ========================================
+           SPINNER / LOADING
+        ======================================== */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner-sm {
+            width: 20px;
+            height: 20px;
+            border-width: 2px;
+        }
+
+        .spinner-lg {
+            width: 60px;
+            height: 60px;
+            border-width: 6px;
+        }
+
+        /* ========================================
+           THEME SELECTOR (SETTINGS UI)
+        ======================================== */
+        .theme-selector {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .selector-group {
+            margin-bottom: 2rem;
+        }
+
+        .selector-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .selector-label {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .selector-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .selector-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .selector-option:hover {
+            border-color: var(--primary);
+            background: var(--bg-hover);
+        }
+
+        .selector-option input[type="radio"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .selector-option-content {
+            flex: 1;
+        }
+
+        .selector-option-title {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .selector-option-desc {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .selector-option-preview {
+            display: flex;
+            gap: 0.375rem;
+        }
+
+        .color-dot {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+        }
+
+        .preview-panel {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-base);
+            border-radius: 0.75rem;
+            border: 2px solid var(--border);
+        }
+
+        .preview-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .preview-colors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+
+        .preview-color-item {
+            text-align: center;
+        }
+
+        .preview-color-swatch {
+            width: 100%;
+            height: 60px;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 2px solid var(--border);
+        }
+
+        .preview-color-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           MARKER ANIMATIONS
+        ======================================== */
+        /* Marker Creation Animation */
+        .marker {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.4) 0%, rgba(255, 159, 64, 0.4) 100%);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            opacity: 0.8;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+            /* タッチ操作の最適化 */
+            touch-action: none;
+        }
+
+        .marker::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 8px;
+            padding: 3px;
+            background: linear-gradient(135deg, #ff6b6b, #ff9f40);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.8;
+        }
+
+        .marker:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .marker-creating {
+            animation: markerCreate 0.2s ease-out;
+        }
+
+        @keyframes markerCreate {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Marker Selection State */
+        .marker-selected {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(139, 92, 246, 0.4) 100%);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2),
+                        0 8px 40px rgba(99, 102, 241, 0.4);
+            z-index: 10;
+            animation: pulseSelected 2s ease-in-out infinite;
+        }
+
+        .marker-selected::before {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        @keyframes pulseSelected {
+            0%, 100% {
+                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2),
+                            0 8px 40px rgba(99, 102, 241, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.3),
+                            0 12px 50px rgba(99, 102, 241, 0.5);
+            }
+        }
+
+        /* Marker Resize Animation */
+        .marker-resizing {
+            transition: none; /* Disable transition during resize */
+        }
+
+        .marker-resize-handle {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border: 2px solid white;
+            border-radius: 50%;
+            position: absolute;
+            cursor: nwse-resize;
+            transition: all 0.2s;
+        }
+
+        .marker-resize-handle:hover {
+            transform: scale(1.3);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Marker Rotation Animation */
+        .marker-rotating {
+            transition: transform 0.15s ease-out;
+        }
+
+        .marker-rotate-handle {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-secondary);
+            border: 2px solid white;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: grab;
+            transition: all 0.2s;
+        }
+
+        .marker-rotate-handle:hover {
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .marker-rotate-handle:active {
+            cursor: grabbing;
+        }
+
+        /* Marker Transparency Toggle (View Mode) */
+        .marker-hidden {
+            opacity: 0.8;
+        }
+
+        .marker-revealed {
+            opacity: 0;
+            animation: markerReveal 0.3s ease-out;
+        }
+
+        @keyframes markerReveal {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.08);
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 0.1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        /* Marker Correctness Colors */
+        .marker-unanswered {
+            background: var(--text-muted);
+        }
+
+        .marker-correct-0 {
+            background: #ef4444; /* 0% Red */
+        }
+
+        .marker-correct-25 {
+            background: #f97316; /* 25% Orange */
+        }
+
+        .marker-correct-50 {
+            background: #f59e0b; /* 50% Yellow */
+        }
+
+        .marker-correct-75 {
+            background: #84cc16; /* 75% Lime */
+        }
+
+        .marker-correct-100 {
+            background: #22c55e; /* 100% Green */
+        }
+
+        /* Marker Correctness Transition */
+        .marker-updating-correctness {
+            animation: correctnessUpdate 0.5s ease-in-out;
+        }
+
+        @keyframes correctnessUpdate {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Marker Delete Animation */
+        .marker-deleting {
+            animation: markerDelete 0.3s ease-in forwards;
+        }
+
+        @keyframes markerDelete {
+            0% {
+                opacity: 0.8;
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.8) rotate(5deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(10deg);
+            }
+        }
+
+        /* Marker Duplication Animation */
+        .marker-duplicate {
+            animation: markerDuplicate 0.4s ease-out;
+        }
+
+        @keyframes markerDuplicate {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translate(-10px, -10px);
+            }
+            60% {
+                opacity: 0.6;
+                transform: scale(1.1) translate(0, 0);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        /* Marker Judgment Buttons (View Mode) */
+        .marker-judgment {
+            position: absolute;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 200;
+            animation: judgmentFadeIn 0.2s ease-out;
+        }
+
+        @keyframes judgmentFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .judgment-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .judgment-btn::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .judgment-btn:hover::before {
+            opacity: 1;
+            animation: buttonGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+                opacity: 0.5;
+            }
+            50% {
+                box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+                opacity: 0.8;
+            }
+        }
+
+        .judgment-btn::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: transparent;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .judgment-btn:hover::after {
+            opacity: 1;
+            animation: pulseRing 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulseRing {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        .judgment-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: none;
+            stroke: white;
+            stroke-width: 3;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+        }
+
+        .judgment-btn-correct {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+
+        .judgment-btn-correct::before {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent);
+            color: #10b981;
+        }
+
+        .judgment-btn-correct::after {
+            border: 2px solid #34d399;
+        }
+
+        .judgment-btn-correct:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.25);
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .judgment-btn-correct:active {
+            transform: translateY(0) scale(0.95);
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+        }
+
+        .judgment-btn-incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+        }
+
+        .judgment-btn-incorrect::before {
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.4), transparent);
+            color: #ef4444;
+        }
+
+        .judgment-btn-incorrect::after {
+            border: 2px solid #f87171;
+        }
+
+        .judgment-btn-incorrect:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.25);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .judgment-btn-incorrect:active {
+            transform: translateY(0) scale(0.95);
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+        }
+
+        /* タッチデバイス対応 */
+        @media (hover: none) and (pointer: coarse) {
+            /* ホバー効果を無効化（タッチデバイスにはホバーがない） */
+            .marker:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+            }
+
+            /* タップ領域を大きく */
+            .judgment-btn {
+                width: 64px;
+                height: 64px;
+            }
+
+            .judgment-btn svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            /* ホバー効果を無効化 */
+            .judgment-btn:hover {
+                transform: scale(1);
+            }
+
+            /* 最小マーカーサイズを大きく（指で操作しやすく） */
+            .marker {
+                min-width: 20px;
+                min-height: 20px;
+            }
+        }
+
+        /* Marker Canvas Demo Container */
+        .marker-canvas-demo {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: var(--bg-base);
+            border: 2px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: crosshair;
+            /* タッチ操作の最適化 */
+            touch-action: none;
+        }
+
+        .marker-canvas-demo.mode-view {
+            cursor: pointer;
+        }
+
+        /* Demo Controls */
+        .marker-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ========================================
+           UTILITIES
+        ======================================== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mt-4 { margin-top: 2rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        
+        </style>
+    </head>
+    <body class="theme-purple mode-light">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-container">
+                <div>
+                    <div class="nav-title">🧩 Component Library v1</div>
+                    <div class="nav-subtitle">Anki Marker - 詳細コンポーネント設計</div>
+                </div>
+                <div class="nav-controls">
+                    <!-- Theme Selection -->
+                    <button class="nav-btn active" data-theme="purple">🟣 Purple Dream</button>
+                    <button class="nav-btn" data-theme="coral">🟠 Coral Vibes</button>
+                    <!-- Light/Dark Toggle -->
+                    <button class="mode-toggle" id="mode-toggle">
+                        <span id="mode-icon">🌙</span>
+                        <span id="mode-text">Dark Mode</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Content -->
+        <main class="content">
+            <!-- Theme Selector Section -->
+            <section class="section active">
+                <div class="section-header">
+                    <h1>🎨 テーマ選択UI (Settings用)</h1>
+                    <p>アプリケーション内でユーザーがテーマとモードを選択するUI</p>
+                </div>
+                <div class="component-group">
+                    <div class="theme-selector">
+                        <div class="selector-group">
+                            <label class="selector-label">テーマを選択</label>
+                            <div class="selector-options">
+                                <label class="selector-option">
+                                    <input type="radio" name="theme-demo" value="purple" checked>
+                                    <div class="selector-option-content">
+                                        <div class="selector-option-title">Purple Dream</div>
+                                        <div class="selector-option-desc">モダンで遊び心のあるデザイン</div>
+                                    </div>
+                                    <div class="selector-option-preview">
+                                        <div class="color-dot" style="background: #a855f7;">
+                                        </div>
+                                        <div class="color-dot" style="background: #e729ff;">
+                                        </div>
+                                        <div class="color-dot" style="background: #84cc16;">
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="theme-demo" value="coral">
+                                    <div class="selector-option-content">
+                                        <div class="selector-option-title">Coral Vibes</div>
+                                        <div class="selector-option-desc">温かくエネルギッシュなデザイン</div>
+                                    </div>
+                                    <div class="selector-option-preview">
+                                        <div class="color-dot" style="background: #f97316;">
+                                        </div>
+                                        <div class="color-dot" style="background: #ec4899;">
+                                        </div>
+                                        <div class="color-dot" style="background: #06b6d4;">
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="selector-group">
+                            <label class="selector-label">カラーモード</label>
+                            <div class="selector-options">
+                                <label class="selector-option">
+                                    <input type="radio" name="mode-demo" value="light" checked>
+                                    <div class="selector-option-content">
+                                        <div class="selector-option-title">☀️ ライトモード</div>
+                                        <div class="selector-option-desc">明るい背景で見やすい</div>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="mode-demo" value="dark">
+                                    <div class="selector-option-content">
+                                        <div class="selector-option-title">🌙 ダークモード</div>
+                                        <div class="selector-option-desc">暗い環境でも目が疲れない</div>
+                                    </div>
+                                </label>
+                                <label class="selector-option">
+                                    <input type="radio" name="mode-demo" value="auto">
+                                    <div class="selector-option-content">
+                                        <div class="selector-option-title">🔄 自動</div>
+                                        <div class="selector-option-desc">システム設定に追従</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="preview-panel">
+                            <div class="preview-title">カラープレビュー</div>
+                            <div class="preview-colors">
+                                <div class="preview-color-item">
+                                    <div class="preview-color-swatch" style="background: var(--primary);">
+                                    </div>
+                                    <div class="preview-color-label">Primary</div>
+                                </div>
+                                <div class="preview-color-item">
+                                    <div class="preview-color-swatch" style="background: var(--accent);">
+                                    </div>
+                                    <div class="preview-color-label">Accent</div>
+                                </div>
+                                <div class="preview-color-item">
+                                    <div class="preview-color-swatch" style="background: var(--success);">
+                                    </div>
+                                    <div class="preview-color-label">Success</div>
+                                </div>
+                                <div class="preview-color-item">
+                                    <div class="preview-color-swatch" style="background: var(--warning);">
+                                    </div>
+                                    <div class="preview-color-label">Warning</div>
+                                </div>
+                                <div class="preview-color-item">
+                                    <div class="preview-color-swatch" style="background: var(--error);">
+                                    </div>
+                                    <div class="preview-color-label">Error</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Buttons -->
+                <div class="component-group mt-4">
+                    <h2>🔘 Buttons</h2>
+                    <div class="component-demo">
+                        <h3>Variants</h3>
+                        <div class="demo-row">
+                            <button class="btn btn-md btn-primary">Primary</button>
+                            <button class="btn btn-md btn-accent">Accent</button>
+                            <button class="btn btn-md btn-outline">Outline</button>
+                            <button class="btn btn-md btn-ghost">Ghost</button>
+                            <button class="btn btn-md btn-danger">Danger</button>
+                            <button class="btn btn-md btn-success">Success</button>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h3>Sizes</h3>
+                        <div class="demo-row">
+                            <button class="btn btn-sm btn-primary">Small</button>
+                            <button class="btn btn-md btn-primary">Medium</button>
+                            <button class="btn btn-lg btn-primary">Large</button>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h3>States</h3>
+                        <div class="demo-row">
+                            <button class="btn btn-md btn-primary">Normal</button>
+                            <button class="btn btn-md btn-primary" disabled>Disabled</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cards -->
+                <div class="component-group">
+                    <h2>🗂️ Cards</h2>
+                    <div class="grid-3">
+                        <div class="card card-elevated">
+                            <h4>Elevated Card</h4>
+                            <p>影付きのカードです。ホバーすると浮き上がります。</p>
+                        </div>
+                        <div class="card card-flat">
+                            <h4>Flat Card</h4>
+                            <p>影なしのシンプルなカードです。</p>
+                        </div>
+                        <div class="card card-outlined">
+                            <h4>Outlined Card</h4>
+                            <p>ボーダー付きのカードです。ホバーすると色が変わります。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Elements -->
+                <div class="component-group">
+                    <h2>📝 Form Elements</h2>
+                    <div class="grid-2">
+                        <div class="component-demo">
+                            <h3>Text Input</h3>
+                            <div class="form-group">
+                                <label class="form-label">ラベル</label>
+                                <input type="text" class="form-input" placeholder="テキストを入力...">
+                            </div>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Select</h3>
+                            <div class="form-group">
+                                <label class="form-label">選択</label>
+                                <select class="form-select">
+                                    <option>オプション 1</option>
+                                    <option>オプション 2</option>
+                                    <option>オプション 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Checkbox</h3>
+                            <div class="form-check">
+                                <input type="checkbox" id="check1" checked>
+                                <label for="check1">チェックボックス 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="check2">
+                                <label for="check2">チェックボックス 2</label>
+                            </div>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Radio</h3>
+                            <div class="form-check">
+                                <input type="radio" name="radio" id="radio1" checked>
+                                <label for="radio1">ラジオ 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="radio" id="radio2">
+                                <label for="radio2">ラジオ 2</label>
+                            </div>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Toggle Switch</h3>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span style="font-size: 0.875rem; color: var(--text-secondary);">通知を有効にする</span>
+                            </div>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Textarea</h3>
+                            <div class="form-group">
+                                <label class="form-label">メッセージ</label>
+                                <textarea class="form-textarea" placeholder="メッセージを入力...">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal/Dialog -->
+                <div class="component-group">
+                    <h2>💬 Modal / Dialog</h2>
+                    <div class="component-demo">
+                        <h3>Modal Sample</h3>
+                        <div class="modal" style="position: relative; max-width: 100%;">
+                            <div class="modal-header">
+                                <h3>モーダルタイトル</h3>
+                                <button class="modal-close">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <p>これはモーダルダイアログのサンプルです。確認メッセージや詳細情報を表示します。</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-md btn-ghost">キャンセル</button>
+                                <button class="btn btn-md btn-primary">確認</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Toast Notifications -->
+                <div class="component-group">
+                    <h2>🔔 Toast Notifications</h2>
+                    <div class="component-demo">
+                        <h3>Toast Types</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="toast toast-success">
+                                <div class="toast-icon">✓</div>
+                                <div class="toast-content">
+                                    <div class="toast-title">成功</div>
+                                    <div class="toast-message">操作が正常に完了しました。</div>
+                                </div>
+                            </div>
+                            <div class="toast toast-warning">
+                                <div class="toast-icon">⚠</div>
+                                <div class="toast-content">
+                                    <div class="toast-title">警告</div>
+                                    <div class="toast-message">この操作には注意が必要です。</div>
+                                </div>
+                            </div>
+                            <div class="toast toast-error">
+                                <div class="toast-icon">✕</div>
+                                <div class="toast-content">
+                                    <div class="toast-title">エラー</div>
+                                    <div class="toast-message">操作に失敗しました。</div>
+                                </div>
+                            </div>
+                            <div class="toast toast-info">
+                                <div class="toast-icon">ℹ</div>
+                                <div class="toast-content">
+                                    <div class="toast-title">情報</div>
+                                    <div class="toast-message">新しいアップデートがあります。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Navigation -->
+                <div class="component-group">
+                    <h2>🧭 Navigation Elements</h2>
+                    <div class="grid-2">
+                        <div class="component-demo">
+                            <h3>Breadcrumb</h3>
+                            <nav class="breadcrumb">
+                                <div class="breadcrumb-item">
+                                    <a href="#">ホーム</a>
+                                    <span class="breadcrumb-separator">/</span>
+                                </div>
+                                <div class="breadcrumb-item">
+                                    <a href="#">フォルダ</a>
+                                    <span class="breadcrumb-separator">/</span>
+                                </div>
+                                <div class="breadcrumb-item">
+                                    <span>シート</span>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Tabs</h3>
+                            <div class="tabs">
+                                <button class="tab active">タブ 1</button>
+                                <button class="tab">タブ 2</button>
+                                <button class="tab">タブ 3</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Badges & Tags -->
+                <div class="component-group">
+                    <h2>🏷️ Badges & Tags</h2>
+                    <div class="grid-2">
+                        <div class="component-demo">
+                            <h3>Badges</h3>
+                            <div class="demo-row">
+                                <span class="badge badge-primary">NEW</span>
+                                <span class="badge badge-success">DONE</span>
+                                <span class="badge badge-warning">PENDING</span>
+                                <span class="badge badge-error">URGENT</span>
+                            </div>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Tags</h3>
+                            <div class="demo-row">
+                                <span class="tag">数学
+                                <button class="tag-close">×</button></span>
+                                <span class="tag">英語
+                                <button class="tag-close">×</button></span>
+                                <span class="tag">歴史
+                                <button class="tag-close">×</button></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress & Spinner -->
+                <div class="component-group">
+                    <h2>⏳ Progress & Loading</h2>
+                    <div class="grid-2">
+                        <div class="component-demo">
+                            <h3>Progress Bar</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 25%;">
+                                    </div>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 50%;">
+                                    </div>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 75%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-demo">
+                            <h3>Spinner</h3>
+                            <div class="demo-row">
+                                <div class="spinner spinner-sm">
+                                </div>
+                                <div class="spinner">
+                                </div>
+                                <div class="spinner spinner-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Marker Animations -->
+                <div class="component-group">
+                    <h2>🖍️ Marker Animations (マーカー機能)</h2>
+                    <div class="component-demo">
+                        <h3>Marker States & Animations</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">マーカー機能の各状態とアニメーション効果のデモです。クリックして状態変化を確認できます。</p>
+                        <!-- Controls -->
+                        <div class="marker-controls">
+                            <button class="btn btn-sm btn-primary" onclick="demoCreateMarker()">✏️ 作成</button>
+                            <button class="btn btn-sm btn-accent" onclick="demoSelectMarker()">👆 選択</button>
+                            <button class="btn btn-sm btn-success" onclick="demoRevealMarker()">👁️ 透明化</button>
+                            <button class="btn btn-sm btn-outline" onclick="demoRotateMarker()">🔄 回転</button>
+                            <button class="btn btn-sm btn-ghost" onclick="demoDuplicateMarker()">📋 複製</button>
+                            <button class="btn btn-sm btn-danger" onclick="demoDeleteMarker()">🗑️ 削除</button>
+                            <button class="btn btn-sm btn-ghost" onclick="demoResetMarkers()">↺ リセット</button>
+                        </div>
+                        <!-- Canvas -->
+                        <div class="marker-canvas-demo" id="marker-canvas">
+                            <!-- Markers will be added dynamically -->
+                        </div>
+                    </div>
+                    <div class="grid-2 mt-4">
+                        <!-- Correctness Colors -->
+                        <div class="component-demo">
+                            <h3>正解率による色変化</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="marker marker-unanswered" style="position: relative; width: 100px; height: 30px;">
+                                    </div>
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">未回答</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="marker marker-correct-0" style="position: relative; width: 100px; height: 30px;">
+                                    </div>
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">0% 正解</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="marker marker-correct-25" style="position: relative; width: 100px; height: 30px;">
+                                    </div>
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">25% 正解</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="marker marker-correct-50" style="position: relative; width: 100px; height: 30px;">
+                                    </div>
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">50% 正解</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="marker marker-correct-75" style="position: relative; width: 100px; height: 30px;">
+                                    </div>
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">75% 正解</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="marker marker-correct-100" style="position: relative; width: 100px; height: 30px;">
+                                    </div>
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">100% 正解</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Judgment Buttons -->
+                        <div class="component-demo">
+                            <h3>正誤判定ボタン (View Mode)</h3>
+                            <div style="display: flex; gap: 1rem; align-items: center; justify-content: center; padding: 2rem;">
+                                <button class="judgment-btn judgment-btn-correct" onclick="alert('正解!')">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </button>
+                                <button class="judgment-btn judgment-btn-incorrect" onclick="alert('不正解')">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p style="font-size: 0.8125rem; color: var(--text-secondary); text-align: center;">マーカー透明化後に表示されます</p>
+                        </div>
+                    </div>
+                    <!-- Animation Specs -->
+                    <div class="component-demo mt-4">
+                        <h3>📐 アニメーション仕様</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                            <div style="padding: 1rem; background: var(--bg-base); border-radius: 0.5rem;">
+                                <div style="font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">作成アニメーション</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-secondary);">• Duration: 200ms<br>• Easing: ease-out<br>• Transform: scale(0 → 1)<br>• Opacity: 0 → 0.8</div>
+                            </div>
+                            <div style="padding: 1rem; background: var(--bg-base); border-radius: 0.5rem;">
+                                <div style="font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">選択状態</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-secondary);">• Border: 3px solid accent<br>• Box shadow: 0 0 0 3px accent/20%<br>• Z-index: 100<br>• Transition: 300ms cubic-bezier</div>
+                            </div>
+                            <div style="padding: 1rem; background: var(--bg-base); border-radius: 0.5rem;">
+                                <div style="font-weight: 700; color: var(--success); margin-bottom: 0.5rem;">透明化アニメーション</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-secondary);">• Duration: 300ms<br>• Easing: ease-out<br>• Scale pulse: 1 → 1.05 → 1<br>• Opacity: 0.8 → 0</div>
+                            </div>
+                            <div style="padding: 1rem; background: var(--bg-base); border-radius: 0.5rem;">
+                                <div style="font-weight: 700; color: var(--warning); margin-bottom: 0.5rem;">回転アニメーション</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-secondary);">• Duration: 150ms<br>• Easing: ease-out<br>• Transform: rotate(angle)<br>• Smooth interpolation</div>
+                            </div>
+                            <div style="padding: 1rem; background: var(--bg-base); border-radius: 0.5rem;">
+                                <div style="font-weight: 700; color: var(--info); margin-bottom: 0.5rem;">複製アニメーション</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-secondary);">• Duration: 400ms<br>• Easing: ease-out<br>• Scale: 0.5 → 1.1 → 1<br>• Translate: (-10, -10) → (0, 0)</div>
+                            </div>
+                            <div style="padding: 1rem; background: var(--bg-base); border-radius: 0.5rem;">
+                                <div style="font-weight: 700; color: var(--error); margin-bottom: 0.5rem;">削除アニメーション</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-secondary);">• Duration: 300ms<br>• Easing: ease-in<br>• Scale: 1 → 0.8 → 0<br>• Rotate: 0deg → 10deg</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Implementation Notes -->
+                    <div class="component-demo mt-4">
+                        <h3>💡 実装ノート</h3>
+                        <div style="padding: 1rem; background: var(--info-bg); border-left: 4px solid var(--info); border-radius: 0.5rem;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Konva.js統合</div>
+                            <ul style="font-size: 0.875rem; color: var(--text-secondary); margin-left: 1.5rem; line-height: 1.8;">
+                                <li>
+                                    <strong>Transformer自動生成</strong>: リサイズハンドルとアニメーションは Konva.Transformer が自動処理</li>
+                                <li>
+                                    <strong>Tween API</strong>: Konva.Tween を使用して滑らかなアニメーション実装</li>
+                                <li>
+                                    <strong>レイヤー分離</strong>: マーカーレイヤーと判定UIレイヤーを分離して描画パフォーマンス最適化</li>
+                                <li>
+                                    <strong>イベントハンドリング</strong>: Konva のイベントシステムでタップ/クリック検出</li>
+                            </ul>
+                        </div>
+                        <div style="padding: 1rem; background: var(--warning-bg); border-left: 4px solid var(--warning); border-radius: 0.5rem; margin-top: 1rem;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">パフォーマンス考慮</div>
+                            <ul style="font-size: 0.875rem; color: var(--text-secondary); margin-left: 1.5rem; line-height: 1.8;">
+                                <li>
+                                    <strong>リサイズ中の transition 無効化</strong>: スムーズなドラッグ操作のため</li>
+                                <li>
+                                    <strong>60fps維持</strong>: すべてのアニメーションは GPU accelerated transform/opacity を使用</li>
+                                <li>
+                                    <strong>デバウンス処理</strong>: 連続操作時の不要な再描画を抑制</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== Section 12: Learning Statistics ==================== -->
+            <section class="component-section">
+                <div class="section-header-icon">📊</div>
+                <h2 class="section-title">学習統計 (Learning Statistics)</h2>
+                <p class="section-subtitle">正解率分布と学習進捗の可視化</p>
+
+                <div class="component-demo">
+                    <h3>マーカー統計ダッシュボード</h3>
+                    <div style="background: var(--bg-elevated); padding: 2rem; border-radius: 1rem;">
+                        <!-- Hero Stats -->
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <!-- Overall Progress -->
+                            <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);">
+                                <div style="font-size: 0.875rem; opacity: 0.9; margin-bottom: 0.5rem;">総マーカー数</div>
+                                <div style="font-size: 3rem; font-weight: 700; margin-bottom: 1rem;">28</div>
+                                <div style="background: rgba(255, 255, 255, 0.2); height: 12px; border-radius: 6px; overflow: hidden; margin-bottom: 0.75rem;">
+                                    <div style="display: flex; height: 100%;">
+                                        <div style="background: #10b981; width: 43%;"></div>
+                                        <div style="background: #3b82f6; width: 29%;"></div>
+                                        <div style="background: #f59e0b; width: 11%;"></div>
+                                        <div style="background: #9ca3af; width: 18%;"></div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; opacity: 0.9;">
+                                    <span>習得 43%</span>
+                                    <span>学習中 29%</span>
+                                    <span>要復習 11%</span>
+                                    <span>未回答 18%</span>
+                                </div>
+                            </div>
+
+                            <!-- Achievement Badge -->
+                            <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏆</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem;">71%</div>
+                                <div style="font-size: 0.875rem; opacity: 0.9;">習得率</div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Panel -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <!-- Mastered -->
+                            <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border: 2px solid #10b981; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">習得済み（≥80%）</div>
+                                <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="font-size: 2rem; font-weight: 700; color: #10b981;">12</span>
+                                    <span style="font-size: 1.25rem; color: var(--text-secondary);">/28</span>
+                                </div>
+                                <div style="color: #10b981; margin-top: 0.5rem; font-size: 0.875rem;">✓ 43% 完璧！</div>
+                            </div>
+
+                            <!-- Learning -->
+                            <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 2px solid #3b82f6; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">学習中（50-80%）</div>
+                                <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="font-size: 2rem; font-weight: 700; color: #3b82f6;">8</span>
+                                    <span style="font-size: 1.25rem; color: var(--text-secondary);">/28</span>
+                                </div>
+                                <div style="color: #3b82f6; margin-top: 0.5rem; font-size: 0.875rem;">📚 29% もう少し！</div>
+                            </div>
+
+                            <!-- Need Review -->
+                            <div style="background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%); border: 2px solid #f59e0b; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">要復習（<50%）</div>
+                                <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="font-size: 2rem; font-weight: 700; color: #f59e0b;">3</span>
+                                    <span style="font-size: 1.25rem; color: var(--text-secondary);">/28</span>
+                                </div>
+                                <div style="color: #f59e0b; margin-top: 0.5rem; font-size: 0.875rem;">💪 11% 強化が必要</div>
+                            </div>
+
+                            <!-- Unanswered -->
+                            <div style="background: var(--bg-base); border: 2px solid var(--border); padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">未回答</div>
+                                <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="font-size: 2rem; font-weight: 700; color: var(--text-secondary);">5</span>
+                                    <span style="font-size: 1.25rem; color: var(--text-muted);">/28</span>
+                                </div>
+                                <div style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.875rem;">🎯 18% まだ未チャレンジ</div>
+                            </div>
+
+                            <!-- Average Accuracy -->
+                            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #60a5fa; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">平均正解率</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #3b82f6;">72%</div>
+                                <div style="color: #10b981; margin-top: 0.5rem; font-size: 0.875rem;">↑ 先週比 +5%</div>
+                            </div>
+
+                            <!-- Total Reviews -->
+                            <div style="background: var(--bg-base); border: 2px solid var(--border); padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">総復習回数</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">156</div>
+                                <div style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.875rem;">今週 +23回</div>
+                            </div>
+
+                            <!-- Streak -->
+                            <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">連続学習日数</div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="font-size: 2rem;">🔥</span>
+                                    <span style="font-size: 2rem; font-weight: 700; color: #f59e0b;">7</span>
+                                    <span style="font-size: 1rem; color: var(--text-secondary);">日</span>
+                                </div>
+                                <div style="color: #f59e0b; margin-top: 0.5rem; font-size: 0.875rem;">素晴らしい継続！</div>
+                            </div>
+
+                            <!-- Today's Progress -->
+                            <div style="background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%); border: 2px solid #a855f7; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">今日の学習</div>
+                                <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="font-size: 2rem; font-weight: 700; color: #a855f7;">+2</span>
+                                    <span style="font-size: 1rem; color: var(--text-secondary);">習得</span>
+                                </div>
+                                <div style="color: #a855f7; margin-top: 0.5rem; font-size: 0.875rem;">🎉 よく頑張りました！</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== Section 13: 7-Stage Color System ==================== -->
+            <section class="component-section">
+                <div class="section-header-icon">🎨</div>
+                <h2 class="section-title">7段階の色変化システム (7-Stage Color System)</h2>
+                <p class="section-subtitle">正解率に基づいた視覚的フィードバック</p>
+
+                <div class="component-demo">
+                    <h3>マーカー色の変化 - 学習進捗を可視化</h3>
+                    <div style="background: var(--bg-elevated); padding: 2rem; border-radius: 1rem;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem;">
+                            <!-- Unanswered -->
+                            <div style="text-align: center;">
+                                <div style="width: 100%; height: 80px; background: #9ca3af; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(156, 163, 175, 0.3); margin-bottom: 1rem;"></div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">未回答</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">グレー #9CA3AF</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">まだ判定なし</div>
+                            </div>
+
+                            <!-- 0% Red -->
+                            <div style="text-align: center;">
+                                <div style="width: 100%; height: 80px; background: #ef4444; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); margin-bottom: 1rem;"></div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">0%</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">赤 #EF4444</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">全て不正解</div>
+                            </div>
+
+                            <!-- 1-20% Orange -->
+                            <div style="text-align: center;">
+                                <div style="width: 100%; height: 80px; background: #f97316; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); margin-bottom: 1rem;"></div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">1-20%</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">橙 #F97316</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">苦手項目</div>
+                            </div>
+
+                            <!-- 21-40% Yellow -->
+                            <div style="text-align: center;">
+                                <div style="width: 100%; height: 80px; background: #eab308; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3); margin-bottom: 1rem;"></div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">21-40%</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">黄 #EAB308</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">要強化</div>
+                            </div>
+
+                            <!-- 41-60% Lime -->
+                            <div style="text-align: center;">
+                                <div style="width: 100%; height: 80px; background: #84cc16; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(132, 204, 22, 0.3); margin-bottom: 1rem;"></div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">41-60%</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">黄緑 #84CC16</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">学習中</div>
+                            </div>
+
+                            <!-- 61-80% Green -->
+                            <div style="text-align: center;">
+                                <div style="width: 100%; height: 80px; background: #22c55e; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3); margin-bottom: 1rem;"></div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">61-80%</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">緑 #22C55E</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">良好</div>
+                            </div>
+
+                            <!-- 81-100% Dark Green -->
+                            <div style="text-align: center;">
+                                <div style="width: 100%; height: 80px; background: #16a34a; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3); margin-bottom: 1rem;"></div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">81-100%</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">濃緑 #16A34A</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">習得済み</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Color Progression Example -->
+                    <div class="component-demo mt-4">
+                        <h3>学習による色の変化例</h3>
+                        <div style="background: var(--bg-elevated); padding: 2rem; border-radius: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; overflow-x: auto; padding: 1rem;">
+                                <div style="text-align: center;">
+                                    <div style="width: 80px; height: 40px; background: #9ca3af; opacity: 0.9; border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">初回</div>
+                                </div>
+                                <div style="font-size: 1.5rem; color: var(--text-muted);">→</div>
+                                <div style="text-align: center;">
+                                    <div style="width: 80px; height: 40px; background: #ef4444; opacity: 0.9; border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">不正解</div>
+                                </div>
+                                <div style="font-size: 1.5rem; color: var(--text-muted);">→</div>
+                                <div style="text-align: center;">
+                                    <div style="width: 80px; height: 40px; background: #f97316; opacity: 0.9; border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">20%</div>
+                                </div>
+                                <div style="font-size: 1.5rem; color: var(--text-muted);">→</div>
+                                <div style="text-align: center;">
+                                    <div style="width: 80px; height: 40px; background: #84cc16; opacity: 0.9; border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">50%</div>
+                                </div>
+                                <div style="font-size: 1.5rem; color: var(--text-muted);">→</div>
+                                <div style="text-align: center;">
+                                    <div style="width: 80px; height: 40px; background: #22c55e; opacity: 0.9; border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">70%</div>
+                                </div>
+                                <div style="font-size: 1.5rem; color: var(--text-muted);">→</div>
+                                <div style="text-align: center;">
+                                    <div style="width: 80px; height: 40px; background: #16a34a; opacity: 0.9; border-radius: 0.25rem; margin-bottom: 0.5rem; box-shadow: 0 0 20px rgba(22, 163, 74, 0.4);"></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">習得!</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--info-bg); border-left: 4px solid var(--info); border-radius: 0.5rem;">
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">💡 色変化のロジック</div>
+                                <ul style="font-size: 0.875rem; color: var(--text-secondary); margin-left: 1.5rem; line-height: 1.8;">
+                                    <li><strong>正解</strong>: 次の段階の色に進む（例: 赤 → 橙 → 黄 → ...）</li>
+                                    <li><strong>不正解</strong>: 前の段階の色に戻る（例: 緑 → 黄緑 → 黄 → ...）</li>
+                                    <li><strong>アニメーション</strong>: 300ms の滑らかな色遷移</li>
+                                    <li><strong>視覚的フィードバック</strong>: 色が濃くなるほど習得度が高い</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script>
+            // State
+        let currentTheme = 'purple';
+        let currentMode = 'light';
+
+        // Elements
+        const body = document.body;
+        const themeBtns = document.querySelectorAll('.nav-btn[data-theme]');
+        const modeToggle = document.getElementById('mode-toggle');
+        const modeIcon = document.getElementById('mode-icon');
+        const modeText = document.getElementById('mode-text');
+
+        // Update theme and mode
+        function updateTheme() {
+            body.className = '';
+            body.classList.add(`theme-${currentTheme}`);
+            body.classList.add(`mode-${currentMode}`);
+        }
+
+        // Theme switching
+        themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentTheme = btn.dataset.theme;
+
+                themeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                updateTheme();
+            });
+        });
+
+        // Mode toggle
+        modeToggle.addEventListener('click', () => {
+            currentMode = currentMode === 'light' ? 'dark' : 'light';
+
+            if (currentMode === 'dark') {
+                modeIcon.textContent = '☀️';
+                modeText.textContent = 'Light Mode';
+            } else {
+                modeIcon.textContent = '🌙';
+                modeText.textContent = 'Dark Mode';
+            }
+
+            updateTheme();
+        });
+
+        // Initialize
+        updateTheme();
+
+        // ========================================
+        // MARKER DEMO FUNCTIONS
+        // ========================================
+        let markerDemoState = {
+            markers: [],
+            nextId: 1,
+            selectedMarkerId: null
+        };
+
+        function getCanvas() {
+            return document.getElementById('marker-canvas');
+        }
+
+        function createMarkerElement(x, y, width, height, rotation = 0, correctness = 'unanswered') {
+            const marker = document.createElement('div');
+            marker.className = `marker marker-${correctness} marker-creating`;
+            marker.id = `demo-marker-${markerDemoState.nextId}`;
+            marker.style.left = `${x}px`;
+            marker.style.top = `${y}px`;
+            marker.style.width = `${width}px`;
+            marker.style.height = `${height}px`;
+            marker.style.transform = `rotate(${rotation}deg)`;
+            
+            marker.dataset.markerId = markerDemoState.nextId;
+            markerDemoState.markers.push({
+                id: markerDemoState.nextId,
+                element: marker,
+                x, y, width, height, rotation, correctness
+            });
+            markerDemoState.nextId++;
+            
+            return marker;
+        }
+
+        function demoCreateMarker() {
+            const canvas = getCanvas();
+            const x = Math.random() * (canvas.offsetWidth - 150) + 20;
+            const y = Math.random() * (canvas.offsetHeight - 80) + 20;
+            const width = 100 + Math.random() * 100;
+            const height = 30 + Math.random() * 30;
+            
+            const marker = createMarkerElement(x, y, width, height);
+            canvas.appendChild(marker);
+            
+            // Remove animation class after animation ends
+            setTimeout(() => {
+                marker.classList.remove('marker-creating');
+            }, 200);
+        }
+
+        function demoSelectMarker() {
+            if (markerDemoState.markers.length === 0) {
+                alert('マーカーを先に作成してください');
+                return;
+            }
+            
+            // Deselect all
+            markerDemoState.markers.forEach(m => {
+                m.element.classList.remove('marker-selected');
+            });
+            
+            // Select random marker
+            const randomIndex = Math.floor(Math.random() * markerDemoState.markers.length);
+            const marker = markerDemoState.markers[randomIndex];
+            marker.element.classList.add('marker-selected');
+            markerDemoState.selectedMarkerId = marker.id;
+        }
+
+        function demoRevealMarker() {
+            if (markerDemoState.markers.length === 0) {
+                alert('マーカーを先に作成してください');
+                return;
+            }
+            
+            const marker = markerDemoState.selectedMarkerId 
+                ? markerDemoState.markers.find(m => m.id === markerDemoState.selectedMarkerId)
+                : markerDemoState.markers[markerDemoState.markers.length - 1];
+            
+            if (!marker) return;
+            
+            marker.element.classList.add('marker-revealed');
+            
+            setTimeout(() => {
+                marker.element.style.opacity = '0.1';
+                
+                // Show judgment buttons
+                const judgmentDiv = document.createElement('div');
+                judgmentDiv.className = 'marker-judgment';
+                // Position below marker, centered
+                const buttonGroupWidth = 56 * 2 + 16; // 2 buttons + gap
+                judgmentDiv.style.left = `${marker.x + (marker.width / 2) - (buttonGroupWidth / 2)}px`;
+                judgmentDiv.style.top = `${marker.y + marker.height + 12}px`;
+                judgmentDiv.innerHTML = 
+                    '<button class="judgment-btn judgment-btn-correct" onclick="demoJudgment(' + marker.id + ', true)">' +
+                    '<svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+                    '</button>' +
+                    '<button class="judgment-btn judgment-btn-incorrect" onclick="demoJudgment(' + marker.id + ', false)">' +
+                    '<svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+                    '</button>';
+                getCanvas().appendChild(judgmentDiv);
+            }, 300);
+        }
+
+        function demoJudgment(markerId, correct) {
+            const marker = markerDemoState.markers.find(m => m.id === markerId);
+            if (!marker) return;
+            
+            // Remove judgment UI
+            const judgmentDivs = getCanvas().querySelectorAll('.marker-judgment');
+            judgmentDivs.forEach(div => div.remove());
+            
+            // Update correctness (demo: cycle through states)
+            const states = ['correct-0', 'correct-25', 'correct-50', 'correct-75', 'correct-100'];
+            let currentIndex;
+            
+            // Handle unanswered state
+            if (marker.correctness === 'unanswered') {
+                currentIndex = correct ? 0 : -1; // Start at correct-0 for correct, or will be 0 for incorrect
+            } else {
+                currentIndex = states.indexOf(marker.correctness);
+            }
+            
+            const nextIndex = correct 
+                ? Math.min(currentIndex + 1, states.length - 1)
+                : Math.max(currentIndex - 1, 0);
+            marker.correctness = states[nextIndex];
+            
+            // Reset opacity and update color
+            marker.element.style.opacity = '0.8';
+            marker.element.className = `marker marker-${marker.correctness} marker-updating-correctness`;
+            
+            setTimeout(() => {
+                marker.element.classList.remove('marker-updating-correctness');
+            }, 500);
+        }
+
+        function demoRotateMarker() {
+            if (!markerDemoState.selectedMarkerId) {
+                alert('マーカーを先に選択してください');
+                return;
+            }
+            
+            const marker = markerDemoState.markers.find(m => m.id === markerDemoState.selectedMarkerId);
+            if (!marker) return;
+            
+            marker.rotation = (marker.rotation + 15) % 360;
+            marker.element.classList.add('marker-rotating');
+            marker.element.style.transform = `rotate(${marker.rotation}deg)`;
+            
+            setTimeout(() => {
+                marker.element.classList.remove('marker-rotating');
+            }, 150);
+        }
+
+        function demoDuplicateMarker() {
+            if (!markerDemoState.selectedMarkerId) {
+                alert('マーカーを先に選択してください');
+                return;
+            }
+            
+            const original = markerDemoState.markers.find(m => m.id === markerDemoState.selectedMarkerId);
+            if (!original) return;
+            
+            const newMarker = createMarkerElement(
+                original.x + 20,
+                original.y + 20,
+                original.width,
+                original.height,
+                original.rotation,
+                original.correctness
+            );
+            
+            newMarker.classList.remove('marker-creating');
+            newMarker.classList.add('marker-duplicate');
+            getCanvas().appendChild(newMarker);
+            
+            setTimeout(() => {
+                newMarker.classList.remove('marker-duplicate');
+            }, 400);
+        }
+
+        function demoDeleteMarker() {
+            if (!markerDemoState.selectedMarkerId) {
+                alert('マーカーを先に選択してください');
+                return;
+            }
+            
+            const index = markerDemoState.markers.findIndex(m => m.id === markerDemoState.selectedMarkerId);
+            if (index === -1) return;
+            
+            const marker = markerDemoState.markers[index];
+            marker.element.classList.add('marker-deleting');
+            
+            setTimeout(() => {
+                marker.element.remove();
+                markerDemoState.markers.splice(index, 1);
+                markerDemoState.selectedMarkerId = null;
+            }, 300);
+        }
+
+        function demoResetMarkers() {
+            markerDemoState.markers.forEach(marker => {
+                marker.element.remove();
+            });
+            markerDemoState.markers = [];
+            markerDemoState.nextId = 1;
+            markerDemoState.selectedMarkerId = null;
+            
+            // Remove any leftover judgment UI
+            const judgmentDivs = getCanvas().querySelectorAll('.marker-judgment');
+            judgmentDivs.forEach(div => div.remove());
+        }
+        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ マーカーインタラクティブデモ - Modern UI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.5px;
+        }
+
+        .demo-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .instructions h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .instructions li {
+            padding: 12px 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .instructions li::before {
+            content: "✨";
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .canvas-container {
+            position: relative;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        #demoCanvas {
+            display: block;
+            width: 100%;
+            height: 700px;
+            cursor: crosshair;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            /* タッチ操作の最適化: ブラウザのデフォルト動作を無効化 */
+            touch-action: none;
+        }
+
+        /* マーカー基本スタイル - モダンデザイン */
+        .marker {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.4) 0%, rgba(255, 159, 64, 0.4) 100%);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
+            cursor: move;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+            /* タッチ操作の最適化 */
+            touch-action: none;
+        }
+
+        .marker::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 8px;
+            padding: 3px;
+            background: linear-gradient(135deg, #ff6b6b, #ff9f40);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.8;
+        }
+
+        .marker:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .marker.selected {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(139, 92, 246, 0.4) 100%);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2),
+                        0 8px 40px rgba(99, 102, 241, 0.4);
+            z-index: 10;
+            animation: pulseSelected 2s ease-in-out infinite;
+        }
+
+        .marker.selected::before {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        @keyframes pulseSelected {
+            0%, 100% {
+                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2),
+                            0 8px 40px rgba(99, 102, 241, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.3),
+                            0 12px 50px rgba(99, 102, 241, 0.5);
+            }
+        }
+
+
+
+        /* リサイズハンドル - モダンデザイン */
+        .resize-handle {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 3px solid #6366f1;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 11;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .marker.selected .resize-handle {
+            opacity: 1;
+            animation: handleAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes handleAppear {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .resize-handle:hover {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            transform: scale(1.5);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.8),
+                        0 0 40px rgba(99, 102, 241, 0.4);
+        }
+
+        /* 8方向のリサイズハンドル配置 */
+        .resize-handle.nw { top: -8px; left: -8px; cursor: nwse-resize; }
+        .resize-handle.n { top: -8px; left: calc(50% - 8px); cursor: ns-resize; }
+        .resize-handle.ne { top: -8px; right: -8px; cursor: nesw-resize; }
+        .resize-handle.e { top: calc(50% - 8px); right: -8px; cursor: ew-resize; }
+        .resize-handle.se { bottom: -8px; right: -8px; cursor: nwse-resize; }
+        .resize-handle.s { bottom: -8px; left: calc(50% - 8px); cursor: ns-resize; }
+        .resize-handle.sw { bottom: -8px; left: -8px; cursor: nesw-resize; }
+        .resize-handle.w { top: calc(50% - 8px); left: -8px; cursor: ew-resize; }
+
+        /* タッチデバイス対応 */
+        @media (hover: none) and (pointer: coarse) {
+            /* リサイズハンドルを大きく（Appleの推奨44px） */
+            .resize-handle {
+                width: 44px;
+                height: 44px;
+            }
+
+            .resize-handle.nw { top: -22px; left: -22px; }
+            .resize-handle.n { top: -22px; left: calc(50% - 22px); }
+            .resize-handle.ne { top: -22px; right: -22px; }
+            .resize-handle.e { top: calc(50% - 22px); right: -22px; }
+            .resize-handle.se { bottom: -22px; right: -22px; }
+            .resize-handle.s { bottom: -22px; left: calc(50% - 22px); }
+            .resize-handle.sw { bottom: -22px; left: -22px; }
+            .resize-handle.w { top: calc(50% - 22px); left: -22px; }
+
+            /* ホバー効果を無効化（タッチデバイスにはホバーがない） */
+            .marker:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+            }
+
+            .resize-handle:hover {
+                transform: none;
+                background: white;
+            }
+
+            /* タップ領域を視覚的に少し大きく */
+            .judgment-btn {
+                width: 64px;
+                height: 64px;
+            }
+
+            .judgment-btn svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            /* ステータスバーとリセットボタンも大きく */
+            .status-bar {
+                font-size: 18px;
+                padding: 14px 28px;
+            }
+
+            .reset-btn {
+                font-size: 18px;
+                padding: 14px 32px;
+            }
+        }
+
+        /* ドラッグ中のプレビュー - グラスモーフィズム */
+        .marker.preview {
+            background: rgba(99, 102, 241, 0.15);
+            backdrop-filter: blur(10px);
+            border: 3px dashed #6366f1;
+            pointer-events: none;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3),
+                        inset 0 0 20px rgba(99, 102, 241, 0.1);
+            animation: previewPulse 1s ease-in-out infinite;
+        }
+
+        .marker.preview::before {
+            display: none;
+        }
+
+        @keyframes previewPulse {
+            0%, 100% {
+                border-color: #6366f1;
+                box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3),
+                            inset 0 0 20px rgba(99, 102, 241, 0.1);
+            }
+            50% {
+                border-color: #8b5cf6;
+                box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4),
+                            inset 0 0 30px rgba(99, 102, 241, 0.2);
+            }
+        }
+
+        /* 判定ボタン - より大きく魅力的に */
+        .judgment-buttons {
+            position: absolute;
+            display: flex;
+            gap: 16px;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            z-index: 12;
+        }
+
+        .judgment-buttons.visible {
+            opacity: 1;
+            pointer-events: auto;
+            animation: buttonsSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes buttonsSlideUp {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .judgment-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .judgment-btn::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .judgment-btn:hover::before {
+            opacity: 1;
+            animation: buttonGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+                opacity: 0.5;
+            }
+            50% {
+                box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+                opacity: 0.8;
+            }
+        }
+
+        .judgment-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .judgment-btn:active {
+            transform: scale(0.9);
+        }
+
+        .judgment-btn svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .judgment-btn-correct {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+
+        .judgment-btn-correct::before {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent);
+            color: #10b981;
+        }
+
+        .judgment-btn-incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+        }
+
+        .judgment-btn-incorrect::before {
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.4), transparent);
+            color: #ef4444;
+        }
+
+        /* 透明化アニメーション */
+        .marker.revealing {
+            animation: markerReveal 0.5s ease-out forwards;
+        }
+
+        @keyframes markerReveal {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.08);
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 0.1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        /* 削除アニメーション */
+        .marker.removing {
+            animation: markerRemove 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes markerRemove {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(5deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+        }
+
+        /* ステータス表示 - モダンデザイン */
+        .status-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .reset-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+
+        .reset-btn:active {
+            transform: translateY(0);
+        }
+
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>✨ マーカーインタラクティブデモ</h1>
+        <p class="demo-description">
+            モダンなアニメーションとUXを備えた、次世代マーカーシステムのデモです。
+            ドラッグ操作でマーカーを作成・リサイズし、美しいアニメーションを体験してください。
+        </p>
+
+        <div class="instructions">
+            <h2>使い方</h2>
+            <ul>
+                <li><strong>マーカー作成</strong>: キャンバス上でドラッグして矩形を描画</li>
+                <li><strong>マーカー選択</strong>: マーカーをクリックして選択（パルスアニメーション）</li>
+                <li><strong>リサイズ</strong>: 選択したマーカーの8つのハンドルをドラッグ</li>
+                <li><strong>移動</strong>: マーカーの中央をドラッグして移動</li>
+                <li><strong>透明化</strong>: マーカーをダブルクリックして透明化（判定ボタン表示）</li>
+                <li><strong>判定</strong>: ✓（正解）または ✗（不正解）ボタンをクリック</li>
+            </ul>
+        </div>
+
+        <div class="canvas-container">
+            <div id="demoCanvas"></div>
+            <div class="status-bar" id="statusBar">マーカー: 0個</div>
+            <button class="reset-btn" onclick="resetDemo()">リセット</button>
+        </div>
+    </div>
+
+    <script>
+        // グローバル状態管理
+        const state = {
+            markers: [],
+            nextId: 1,
+            selectedMarker: null,
+            dragging: false,
+            resizing: false,
+            dragStart: { x: 0, y: 0 },
+            dragCurrent: { x: 0, y: 0 },
+            resizeHandle: null,
+            resizeOriginal: {},
+            previewMarker: null
+        };
+
+        const canvas = document.getElementById('demoCanvas');
+        const statusBar = document.getElementById('statusBar');
+
+        // デバイス検出: タッチデバイスかどうか
+        const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+        const minSize = isTouchDevice ? 20 : 5;  // スマホ: 20px、PC: 5px
+
+        // SVGアイコン作成ヘルパー
+        function createCheckIcon() {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 24 24');
+            const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+            polyline.setAttribute('points', '20 6 9 17 4 12');
+            svg.appendChild(polyline);
+            return svg;
+        }
+
+        function createCrossIcon() {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 24 24');
+            const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line1.setAttribute('x1', '18');
+            line1.setAttribute('y1', '6');
+            line1.setAttribute('x2', '6');
+            line1.setAttribute('y2', '18');
+            const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line2.setAttribute('x1', '6');
+            line2.setAttribute('y1', '6');
+            line2.setAttribute('x2', '18');
+            line2.setAttribute('y2', '18');
+            svg.appendChild(line1);
+            svg.appendChild(line2);
+            return svg;
+        }
+
+
+
+        // マーカー作成開始（Pointer Events: マウス/タッチ統一）
+        canvas.addEventListener('pointerdown', (e) => {
+            if (e.target !== canvas) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // 既存の選択を解除
+            if (state.selectedMarker) {
+                state.selectedMarker.element.classList.remove('selected');
+                hideJudgmentButtons(state.selectedMarker);
+                state.selectedMarker = null;
+            }
+
+            state.dragging = true;
+            state.dragStart = { x, y };
+            state.dragCurrent = { x, y };
+
+            // プレビューマーカー作成
+            state.previewMarker = document.createElement('div');
+            state.previewMarker.className = 'marker preview';
+            canvas.appendChild(state.previewMarker);
+            updatePreviewMarker();
+        });
+
+        // ドラッグ中（Pointer Events: マウス/タッチ統一）
+        canvas.addEventListener('pointermove', (e) => {
+            if (!state.dragging && !state.resizing) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            if (state.dragging) {
+                state.dragCurrent = { x, y };
+                updatePreviewMarker();
+            } else if (state.resizing && state.selectedMarker) {
+                handleResize(x, y);
+            }
+        });
+
+        // ドラッグ終了（Pointer Events: マウス/タッチ統一）
+        canvas.addEventListener('pointerup', (e) => {
+            if (state.dragging) {
+                // プレビューを削除
+                if (state.previewMarker) {
+                    canvas.removeChild(state.previewMarker);
+                    state.previewMarker = null;
+                }
+
+                // マーカー作成（デバイスに応じた最小サイズ）
+                const width = Math.abs(state.dragCurrent.x - state.dragStart.x);
+                const height = Math.abs(state.dragCurrent.y - state.dragStart.y);
+
+                if (width > minSize && height > minSize) {
+                    const x = Math.min(state.dragStart.x, state.dragCurrent.x);
+                    const y = Math.min(state.dragStart.y, state.dragCurrent.y);
+                    createMarker(x, y, width, height);
+                }
+
+                state.dragging = false;
+            } else if (state.resizing) {
+                state.resizing = false;
+                state.resizeHandle = null;
+                if (state.selectedMarker) {
+                    state.selectedMarker.element.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                }
+            }
+        });
+
+        // ポインターがキャンバスから離れた場合（Pointer Events: マウス/タッチ統一）
+        canvas.addEventListener('pointerleave', () => {
+            if (state.dragging && state.previewMarker) {
+                canvas.removeChild(state.previewMarker);
+                state.previewMarker = null;
+                state.dragging = false;
+            }
+        });
+
+        // プレビューマーカー更新
+        function updatePreviewMarker() {
+            if (!state.previewMarker) return;
+
+            const x = Math.min(state.dragStart.x, state.dragCurrent.x);
+            const y = Math.min(state.dragStart.y, state.dragCurrent.y);
+            const width = Math.abs(state.dragCurrent.x - state.dragStart.x);
+            const height = Math.abs(state.dragCurrent.y - state.dragStart.y);
+
+            state.previewMarker.style.left = `${x}px`;
+            state.previewMarker.style.top = `${y}px`;
+            state.previewMarker.style.width = `${width}px`;
+            state.previewMarker.style.height = `${height}px`;
+        }
+
+        // マーカー作成
+        function createMarker(x, y, width, height) {
+            const marker = {
+                id: state.nextId++,
+                x, y, width, height,
+                revealed: false,
+                element: null,
+                judgmentButtons: null
+            };
+
+            // マーカー要素作成
+            const markerEl = document.createElement('div');
+            markerEl.className = 'marker';
+            markerEl.style.left = `${x}px`;
+            markerEl.style.top = `${y}px`;
+            markerEl.style.width = `${width}px`;
+            markerEl.style.height = `${height}px`;
+
+            // イベントリスナー
+            markerEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectMarker(marker);
+            });
+
+            markerEl.addEventListener('dblclick', (e) => {
+                e.stopPropagation();
+                revealMarker(marker);
+            });
+
+            // リサイズハンドル追加
+            const handles = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
+            handles.forEach(dir => {
+                const handle = document.createElement('div');
+                handle.className = `resize-handle ${dir}`;
+                handle.addEventListener('pointerdown', (e) => {
+                    e.stopPropagation();
+                    startResize(marker, dir);
+                });
+                markerEl.appendChild(handle);
+            });
+
+            canvas.appendChild(markerEl);
+            marker.element = markerEl;
+
+            // 判定ボタン作成
+            createJudgmentButtons(marker);
+
+            state.markers.push(marker);
+            updateStatus();
+        }
+
+        // マーカー選択
+        function selectMarker(marker) {
+            // 既存の選択を解除
+            if (state.selectedMarker && state.selectedMarker !== marker) {
+                state.selectedMarker.element.classList.remove('selected');
+                hideJudgmentButtons(state.selectedMarker);
+            }
+
+            state.selectedMarker = marker;
+            marker.element.classList.add('selected');
+        }
+
+        // リサイズ開始
+        function startResize(marker, direction) {
+            state.resizing = true;
+            state.resizeHandle = direction;
+            state.selectedMarker = marker;
+            state.resizeOriginal = {
+                x: marker.x,
+                y: marker.y,
+                width: marker.width,
+                height: marker.height
+            };
+
+            // リサイズ中はトランジションを無効化
+            marker.element.style.transition = 'none';
+        }
+
+        // リサイズ処理
+        function handleResize(currentX, currentY) {
+            const marker = state.selectedMarker;
+            const handle = state.resizeHandle;
+            const orig = state.resizeOriginal;
+
+            let newX = orig.x;
+            let newY = orig.y;
+            let newWidth = orig.width;
+            let newHeight = orig.height;
+
+            // 方向に応じて計算
+            if (handle.includes('n')) {
+                const deltaY = currentY - orig.y;
+                newY = currentY;
+                newHeight = orig.height - deltaY;
+            }
+            if (handle.includes('s')) {
+                newHeight = currentY - orig.y;
+            }
+            if (handle.includes('w')) {
+                const deltaX = currentX - orig.x;
+                newX = currentX;
+                newWidth = orig.width - deltaX;
+            }
+            if (handle.includes('e')) {
+                newWidth = currentX - orig.x;
+            }
+
+            // 最小サイズ制限（デバイスに応じて動的）
+            if (newWidth < minSize) {
+                if (handle.includes('w')) {
+                    newX = orig.x + orig.width - minSize;
+                }
+                newWidth = minSize;
+            }
+            if (newHeight < minSize) {
+                if (handle.includes('n')) {
+                    newY = orig.y + orig.height - minSize;
+                }
+                newHeight = minSize;
+            }
+
+            // マーカー更新
+            marker.x = newX;
+            marker.y = newY;
+            marker.width = newWidth;
+            marker.height = newHeight;
+
+            marker.element.style.left = `${newX}px`;
+            marker.element.style.top = `${newY}px`;
+            marker.element.style.width = `${newWidth}px`;
+            marker.element.style.height = `${newHeight}px`;
+
+            // 判定ボタン位置更新
+            if (marker.revealed && marker.judgmentButtons) {
+                positionJudgmentButtons(marker);
+            }
+        }
+
+        // マーカー透明化
+        function revealMarker(marker) {
+            if (marker.revealed) return;
+
+            marker.revealed = true;
+            marker.element.classList.add('revealing');
+
+            setTimeout(() => {
+                marker.element.classList.remove('revealing');
+                marker.element.style.opacity = '0.1';
+                showJudgmentButtons(marker);
+            }, 500);
+        }
+
+        // 判定ボタン作成
+        function createJudgmentButtons(marker) {
+            const container = document.createElement('div');
+            container.className = 'judgment-buttons';
+
+            const correctBtn = document.createElement('button');
+            correctBtn.className = 'judgment-btn judgment-btn-correct';
+            correctBtn.appendChild(createCheckIcon());
+            correctBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleJudgment(marker, true);
+            });
+
+            const incorrectBtn = document.createElement('button');
+            incorrectBtn.className = 'judgment-btn judgment-btn-incorrect';
+            incorrectBtn.appendChild(createCrossIcon());
+            incorrectBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleJudgment(marker, false);
+            });
+
+            container.appendChild(correctBtn);
+            container.appendChild(incorrectBtn);
+            canvas.appendChild(container);
+
+            marker.judgmentButtons = container;
+            positionJudgmentButtons(marker);
+        }
+
+        // 判定ボタン配置
+        function positionJudgmentButtons(marker) {
+            if (!marker.judgmentButtons) return;
+
+            const buttonGroupWidth = 56 * 2 + 16;
+            marker.judgmentButtons.style.left = `${marker.x + (marker.width / 2) - (buttonGroupWidth / 2)}px`;
+            marker.judgmentButtons.style.top = `${marker.y + marker.height + 20}px`;
+        }
+
+        // 判定ボタン表示
+        function showJudgmentButtons(marker) {
+            if (marker.judgmentButtons) {
+                marker.judgmentButtons.classList.add('visible');
+            }
+        }
+
+        // 判定ボタン非表示
+        function hideJudgmentButtons(marker) {
+            if (marker.judgmentButtons) {
+                marker.judgmentButtons.classList.remove('visible');
+            }
+        }
+
+        // 判定処理
+        function handleJudgment(marker, isCorrect) {
+            console.log(`マーカー ${marker.id}: ${isCorrect ? '正解' : '不正解'}`);
+
+            // 削除アニメーション
+            marker.element.classList.add('removing');
+
+            setTimeout(() => {
+                // マーカーを削除
+                if (marker.element.parentNode) {
+                    canvas.removeChild(marker.element);
+                }
+                if (marker.judgmentButtons && marker.judgmentButtons.parentNode) {
+                    canvas.removeChild(marker.judgmentButtons);
+                }
+
+                const index = state.markers.indexOf(marker);
+                if (index > -1) {
+                    state.markers.splice(index, 1);
+                }
+
+                if (state.selectedMarker === marker) {
+                    state.selectedMarker = null;
+                }
+
+                updateStatus();
+            }, 500);
+        }
+
+        // ステータス更新
+        function updateStatus() {
+            statusBar.textContent = `マーカー: ${state.markers.length}個`;
+        }
+
+        // デモリセット
+        function resetDemo() {
+            // すべてのマーカーを削除
+            state.markers.forEach(marker => {
+                if (marker.element && marker.element.parentNode) {
+                    canvas.removeChild(marker.element);
+                }
+                if (marker.judgmentButtons && marker.judgmentButtons.parentNode) {
+                    canvas.removeChild(marker.judgmentButtons);
+                }
+            });
+
+            state.markers = [];
+            state.nextId = 1;
+            state.selectedMarker = null;
+            state.dragging = false;
+            state.resizing = false;
+
+            updateStatus();
+        }
+
+        // 初期化
+        updateStatus();
+    </script>
+</body>
+</html>
