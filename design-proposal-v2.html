@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anki Marker Design Proposal v2 - Light/Dark Mode</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Current Design: Epilogue + Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Option 1: Plus Jakarta Sans + DM Sans (Modern Playful) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Option 2: Poppins + Inter (Clean Modern) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Japanese -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+           THEME: CURRENT DESIGN
+        ======================================== */
+
+        /* Current - Light Mode */
+        body.theme-current.mode-light {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --accent: #10b981;
+            --accent-dark: #059669;
+
+            --bg-base: #fafaf8;
+            --bg-elevated: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --text-on-primary: #ffffff;
+
+            --border: #e5e7eb;
+            --border-light: #f3f4f6;
+
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
+
+            --font-heading: 'Epilogue', 'Noto Sans JP', sans-serif;
+            --font-body: 'Manrope', 'Noto Sans JP', sans-serif;
+        }
+
+        /* Current - Dark Mode */
+        body.theme-current.mode-dark {
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --primary-light: #93c5fd;
+            --accent: #34d399;
+            --accent-dark: #10b981;
+
+            --bg-base: #0a0a0a;
+            --bg-elevated: #1a1a1a;
+            --bg-overlay: rgba(0, 0, 0, 0.8);
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --text-on-primary: #0a0a0a;
+
+            --border: #2d2d2d;
+            --border-light: #262626;
+
+            --success: #34d399;
+            --warning: #fbbf24;
+            --error: #f87171;
+
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.4);
+
+            --font-heading: 'Epilogue', 'Noto Sans JP', sans-serif;
+            --font-body: 'Manrope', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ========================================
+           THEME: OPTION 1 - PURPLE DREAM
+        ======================================== */
+
+        /* Option 1 - Light Mode */
+        body.theme-option1.mode-light {
+            --primary: #a855f7;
+            --primary-dark: #9333ea;
+            --primary-light: #c084fc;
+            --accent: #e729ff;
+            --accent-dark: #c026d3;
+            --accent-secondary: #84cc16;
+
+            --bg-base: #fafaf8;
+            --bg-elevated: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --text-on-primary: #ffffff;
+
+            --border: #e5e7eb;
+            --border-light: #f3f4f6;
+
+            --success: #84cc16;
+            --warning: #f59e0b;
+            --error: #ef4444;
+
+            --shadow: 0 1px 3px rgba(168, 85, 247, 0.1), 0 1px 2px rgba(168, 85, 247, 0.06);
+            --shadow-md: 0 4px 6px rgba(168, 85, 247, 0.12), 0 2px 4px rgba(168, 85, 247, 0.08);
+            --shadow-lg: 0 10px 15px rgba(168, 85, 247, 0.15), 0 4px 6px rgba(168, 85, 247, 0.1);
+
+            --font-heading: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+            --font-body: 'DM Sans', 'Noto Sans JP', sans-serif;
+        }
+
+        /* Option 1 - Dark Mode */
+        body.theme-option1.mode-dark {
+            --primary: #c084fc;
+            --primary-dark: #a855f7;
+            --primary-light: #e9d5ff;
+            --accent: #f0abfc;
+            --accent-dark: #e879f9;
+            --accent-secondary: #a3e635;
+
+            --bg-base: #0a0a0a;
+            --bg-elevated: #1a1a1a;
+            --bg-overlay: rgba(0, 0, 0, 0.8);
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --text-on-primary: #0a0a0a;
+
+            --border: #2d2d2d;
+            --border-light: #262626;
+
+            --success: #a3e635;
+            --warning: #fbbf24;
+            --error: #f87171;
+
+            --shadow: 0 1px 3px rgba(192, 132, 252, 0.2), 0 1px 2px rgba(192, 132, 252, 0.15);
+            --shadow-md: 0 4px 6px rgba(192, 132, 252, 0.25), 0 2px 4px rgba(192, 132, 252, 0.2);
+            --shadow-lg: 0 10px 15px rgba(192, 132, 252, 0.3), 0 4px 6px rgba(192, 132, 252, 0.25);
+
+            --font-heading: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+            --font-body: 'DM Sans', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ========================================
+           THEME: OPTION 2 - CORAL VIBES
+        ======================================== */
+
+        /* Option 2 - Light Mode */
+        body.theme-option2.mode-light {
+            --primary: #f97316;
+            --primary-dark: #ea580c;
+            --primary-light: #fb923c;
+            --accent: #ec4899;
+            --accent-dark: #db2777;
+            --accent-secondary: #06b6d4;
+
+            --bg-base: #fafaf8;
+            --bg-elevated: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --text-on-primary: #ffffff;
+
+            --border: #e5e7eb;
+            --border-light: #f3f4f6;
+
+            --success: #06b6d4;
+            --warning: #f59e0b;
+            --error: #ef4444;
+
+            --shadow: 0 1px 3px rgba(249, 115, 22, 0.1), 0 1px 2px rgba(249, 115, 22, 0.06);
+            --shadow-md: 0 4px 6px rgba(249, 115, 22, 0.12), 0 2px 4px rgba(249, 115, 22, 0.08);
+            --shadow-lg: 0 10px 15px rgba(249, 115, 22, 0.15), 0 4px 6px rgba(249, 115, 22, 0.1);
+
+            --font-heading: 'Poppins', 'Noto Sans JP', sans-serif;
+            --font-body: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        /* Option 2 - Dark Mode */
+        body.theme-option2.mode-dark {
+            --primary: #fb923c;
+            --primary-dark: #f97316;
+            --primary-light: #fdba74;
+            --accent: #f472b6;
+            --accent-dark: #ec4899;
+            --accent-secondary: #22d3ee;
+
+            --bg-base: #0a0a0a;
+            --bg-elevated: #1a1a1a;
+            --bg-overlay: rgba(0, 0, 0, 0.8);
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --text-on-primary: #0a0a0a;
+
+            --border: #2d2d2d;
+            --border-light: #262626;
+
+            --success: #22d3ee;
+            --warning: #fbbf24;
+            --error: #f87171;
+
+            --shadow: 0 1px 3px rgba(251, 146, 60, 0.2), 0 1px 2px rgba(251, 146, 60, 0.15);
+            --shadow-md: 0 4px 6px rgba(251, 146, 60, 0.25), 0 2px 4px rgba(251, 146, 60, 0.2);
+            --shadow-lg: 0 10px 15px rgba(251, 146, 60, 0.3), 0 4px 6px rgba(251, 146, 60, 0.25);
+
+            --font-heading: 'Poppins', 'Noto Sans JP', sans-serif;
+            --font-body: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ========================================
+           BASE STYLES
+        ======================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .nav-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .theme-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .theme-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .theme-btn.active {
+            background: var(--primary);
+            color: var(--text-on-primary);
+            border-color: var(--primary);
+        }
+
+        .mode-toggle {
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: var(--text-on-primary);
+            border: 2px solid var(--primary);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ========================================
+           CONTENT
+        ======================================== */
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           OVERVIEW - COMPARISON GRID
+        ======================================== */
+
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .comparison-item {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .comparison-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .badge-current {
+            background: var(--border-light);
+            color: var(--text-muted);
+        }
+
+        .badge-new {
+            background: var(--primary);
+            color: var(--text-on-primary);
+        }
+
+        .mode-indicator {
+            display: inline-block;
+            margin-left: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        /* ========================================
+           COLOR PALETTE
+        ======================================== */
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .color-card {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .color-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .color-swatch {
+            height: 150px;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .color-info {
+            padding: 1rem;
+        }
+
+        .color-info h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .color-info p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .color-info code {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            background: var(--bg-base);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ========================================
+           TYPOGRAPHY
+        ======================================== */
+
+        .typo-showcase {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .typo-sample {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .typo-sample:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .typo-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        /* ========================================
+           COMPONENTS
+        ======================================== */
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .component-card {
+            background: var(--bg-elevated);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .component-card h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--text-on-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--text-on-primary);
+        }
+
+        .btn-accent:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--text-on-primary);
+        }
+
+        /* Cards */
+        .card-sample {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s;
+        }
+
+        .card-sample:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-sample h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .card-sample p {
+            color: var(--text-secondary);
+        }
+
+        /* Form Elements */
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+        }
+
+        /* ========================================
+           UTILITIES
+        ======================================== */
+
+        .mt-4 { margin-top: 2rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .text-center { text-align: center; }
+        .flex { display: flex; }
+        .gap-2 { gap: 1rem; }
+        .flex-wrap { flex-wrap: wrap; }
+        .justify-center { justify-content: center; }
+    </style>
+</head>
+<body class="theme-current mode-light">
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div>
+                <div class="nav-title">🎨 Design Proposal v2</div>
+                <div class="nav-subtitle">Anki Marker - Light/Dark Mode 対応</div>
+            </div>
+            <div class="nav-controls">
+                <!-- Theme Selection -->
+                <button class="theme-btn active" data-theme="current">現在のデザイン</button>
+                <button class="theme-btn" data-theme="option1">Option 1: Purple</button>
+                <button class="theme-btn" data-theme="option2">Option 2: Coral</button>
+
+                <!-- Section Navigation -->
+                <button class="theme-btn" data-section="overview">📊 概要</button>
+                <button class="theme-btn" data-section="colors">🎨 カラー詳細</button>
+                <button class="theme-btn" data-section="typography">✍️ タイポグラフィ</button>
+                <button class="theme-btn" data-section="components">🧩 コンポーネント</button>
+
+                <!-- Light/Dark Toggle -->
+                <button class="mode-toggle" id="mode-toggle">
+                    <span id="mode-icon">🌙</span>
+                    <span id="mode-text">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="content">
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+            <div class="section-header">
+                <h1>デザイン提案 v2 <span class="mode-indicator" id="overview-mode">☀️</span></h1>
+                <p>3つのデザインオプション × Light/Dark Mode</p>
+            </div>
+
+            <div class="comparison">
+                <!-- Current Design -->
+                <div class="comparison-item">
+                    <span class="comparison-badge badge-current">Current</span>
+                    <h2>現在のデザイン</h2>
+                    <p class="mt-4">
+                        Editorial-inspired<br>
+                        <span id="current-color-light" style="display: inline;">Light: Blue (#3b82f6)</span>
+                        <span id="current-color-dark" style="display: none;">Dark: Blue (#60a5fa)</span><br>
+                        Epilogue + Manrope
+                    </p>
+                    <div class="mt-4">
+                        <div id="current-gradient" style="width: 100%; height: 100px; background: linear-gradient(135deg, #3b82f6, #10b981); border-radius: 0.75rem; margin-bottom: 1rem;"></div>
+                        <p style="color: var(--text-muted);">落ち着いたプロフェッショナルな印象</p>
+                    </div>
+                </div>
+
+                <!-- Option 1 -->
+                <div class="comparison-item">
+                    <span class="comparison-badge badge-new">NEW</span>
+                    <h2>Option 1: Purple Dream</h2>
+                    <p class="mt-4">
+                        Modern Playful<br>
+                        <span id="option1-color-light" style="display: inline;">Light: Purple (#a855f7)</span>
+                        <span id="option1-color-dark" style="display: none;">Dark: Purple (#c084fc)</span><br>
+                        Plus Jakarta Sans + DM Sans
+                    </p>
+                    <div class="mt-4">
+                        <div id="option1-gradient" style="width: 100%; height: 100px; background: linear-gradient(135deg, #a855f7, #e729ff); border-radius: 0.75rem; margin-bottom: 1rem;"></div>
+                        <p style="color: var(--text-muted);">大胆で記憶に残る、遊び心</p>
+                    </div>
+                </div>
+
+                <!-- Option 2 -->
+                <div class="comparison-item">
+                    <span class="comparison-badge badge-new">NEW</span>
+                    <h2>Option 2: Coral Vibes</h2>
+                    <p class="mt-4">
+                        Warm & Friendly<br>
+                        <span id="option2-color-light" style="display: inline;">Light: Orange (#f97316)</span>
+                        <span id="option2-color-dark" style="display: none;">Dark: Orange (#fb923c)</span><br>
+                        Poppins + Inter
+                    </p>
+                    <div class="mt-4">
+                        <div id="option2-gradient" style="width: 100%; height: 100px; background: linear-gradient(135deg, #f97316, #ec4899); border-radius: 0.75rem; margin-bottom: 1rem;"></div>
+                        <p style="color: var(--text-muted);">温かくエネルギッシュ</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Colors Section -->
+        <section id="colors" class="section">
+            <div class="section-header">
+                <h1>カラーパレット詳細 <span class="mode-indicator" id="colors-mode">☀️</span></h1>
+                <p>現在選択中のテーマの色構成</p>
+            </div>
+
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--primary);">Primary</div>
+                    <div class="color-info">
+                        <h3>Primary Color</h3>
+                        <p>メインブランドカラー</p>
+                        <code id="primary-code">#3b82f6</code>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--accent);">Accent</div>
+                    <div class="color-info">
+                        <h3>Accent Color</h3>
+                        <p>強調・CTA用</p>
+                        <code id="accent-code">#10b981</code>
+                    </div>
+                </div>
+
+                <div class="color-card" id="accent-secondary-card" style="display: none;">
+                    <div class="color-swatch" style="background: var(--accent-secondary);">Secondary</div>
+                    <div class="color-info">
+                        <h3>Secondary Accent</h3>
+                        <p>サブアクセント</p>
+                        <code id="accent-secondary-code">#84cc16</code>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--success);">Success</div>
+                    <div class="color-info">
+                        <h3>Success</h3>
+                        <p>成功・完了状態</p>
+                        <code id="success-code">#10b981</code>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--warning);">Warning</div>
+                    <div class="color-info">
+                        <h3>Warning</h3>
+                        <p>警告・注意</p>
+                        <code id="warning-code">#f59e0b</code>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--error);">Error</div>
+                    <div class="color-info">
+                        <h3>Error</h3>
+                        <p>エラー・削除</p>
+                        <code id="error-code">#ef4444</code>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--bg-elevated); border: 2px solid var(--border);">
+                        <span style="color: var(--text-primary); text-shadow: none;">Background</span>
+                    </div>
+                    <div class="color-info">
+                        <h3>Background</h3>
+                        <p>背景色</p>
+                        <code id="bg-code">#fafaf8</code>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--text-primary);">
+                        <span style="color: var(--bg-elevated);">Text</span>
+                    </div>
+                    <div class="color-info">
+                        <h3>Text Color</h3>
+                        <p>テキストカラー</p>
+                        <code id="text-code">#1a1a1a</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography Section -->
+        <section id="typography" class="section">
+            <div class="section-header">
+                <h1>タイポグラフィ <span class="mode-indicator" id="typo-mode">☀️</span></h1>
+                <p>現在選択中のテーマのフォント構成</p>
+            </div>
+
+            <div class="typo-showcase">
+                <div class="typo-sample">
+                    <div class="typo-label">Heading Font (見出し)</div>
+                    <h1 style="font-size: 3rem; color: var(--text-primary);">見出し Large Heading</h1>
+                    <h2 style="font-size: 2.25rem; margin-top: 1rem; color: var(--text-primary);">見出し Medium Heading</h2>
+                    <h3 style="font-size: 1.875rem; margin-top: 1rem; color: var(--text-primary);">見出し Small Heading</h3>
+                    <p style="margin-top: 1rem; color: var(--text-muted);" id="heading-font-name">Font: Epilogue</p>
+                </div>
+
+                <div class="typo-sample">
+                    <div class="typo-label">Body Font (本文)</div>
+                    <p style="font-size: 1.125rem; color: var(--text-primary);">
+                        これは本文のサンプルテキストです。学習アプリケーションでは、長時間読んでも目が疲れない、
+                        読みやすいフォントが重要です。日本語と英語が混在しても美しく表示されることが求められます。
+                    </p>
+                    <p style="font-size: 1rem; margin-top: 1rem; color: var(--text-secondary);">
+                        This is a sample body text in English. The font should be highly readable
+                        and maintain consistency across different languages and writing systems.
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--text-muted);" id="body-font-name">Font: Manrope</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components Section -->
+        <section id="components" class="section">
+            <div class="section-header">
+                <h1>コンポーネント <span class="mode-indicator" id="comp-mode">☀️</span></h1>
+                <p>実際のUIコンポーネントのプレビュー</p>
+            </div>
+
+            <div class="component-grid">
+                <!-- Buttons -->
+                <div class="component-card">
+                    <h3>Buttons</h3>
+                    <div class="flex gap-2 flex-wrap">
+                        <button class="btn btn-primary">Primary Button</button>
+                        <button class="btn btn-accent">Accent Button</button>
+                        <button class="btn btn-outline">Outline Button</button>
+                    </div>
+                </div>
+
+                <!-- Cards -->
+                <div class="component-card">
+                    <h3>Cards</h3>
+                    <div class="card-sample">
+                        <h4>Sample Card Title</h4>
+                        <p style="margin-top: 0.5rem;">
+                            これはカードのサンプルです。ホバーすると浮き上がります。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Form Elements -->
+                <div class="component-card">
+                    <h3>Form Elements</h3>
+                    <input type="text" placeholder="テキスト入力" style="margin-bottom: 1rem;">
+                    <select>
+                        <option>オプション 1</option>
+                        <option>オプション 2</option>
+                        <option>オプション 3</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // State
+        let currentTheme = 'current';
+        let currentMode = 'light';
+
+        // Elements
+        const body = document.body;
+        const themeBtns = document.querySelectorAll('.theme-btn[data-theme]');
+        const sectionBtns = document.querySelectorAll('.theme-btn[data-section]');
+        const modeToggle = document.getElementById('mode-toggle');
+        const modeIcon = document.getElementById('mode-icon');
+        const modeText = document.getElementById('mode-text');
+
+        // Theme data
+        const themes = {
+            current: {
+                light: {
+                    primary: '#3b82f6',
+                    accent: '#10b981',
+                    success: '#10b981',
+                    warning: '#f59e0b',
+                    error: '#ef4444',
+                    bg: '#fafaf8',
+                    text: '#1a1a1a',
+                    headingFont: 'Epilogue',
+                    bodyFont: 'Manrope',
+                    hasSecondary: false
+                },
+                dark: {
+                    primary: '#60a5fa',
+                    accent: '#34d399',
+                    success: '#34d399',
+                    warning: '#fbbf24',
+                    error: '#f87171',
+                    bg: '#0a0a0a',
+                    text: '#f5f5f5',
+                    headingFont: 'Epilogue',
+                    bodyFont: 'Manrope',
+                    hasSecondary: false
+                }
+            },
+            option1: {
+                light: {
+                    primary: '#a855f7',
+                    accent: '#e729ff',
+                    accentSecondary: '#84cc16',
+                    success: '#84cc16',
+                    warning: '#f59e0b',
+                    error: '#ef4444',
+                    bg: '#fafaf8',
+                    text: '#1a1a1a',
+                    headingFont: 'Plus Jakarta Sans',
+                    bodyFont: 'DM Sans',
+                    hasSecondary: true
+                },
+                dark: {
+                    primary: '#c084fc',
+                    accent: '#f0abfc',
+                    accentSecondary: '#a3e635',
+                    success: '#a3e635',
+                    warning: '#fbbf24',
+                    error: '#f87171',
+                    bg: '#0a0a0a',
+                    text: '#f5f5f5',
+                    headingFont: 'Plus Jakarta Sans',
+                    bodyFont: 'DM Sans',
+                    hasSecondary: true
+                }
+            },
+            option2: {
+                light: {
+                    primary: '#f97316',
+                    accent: '#ec4899',
+                    accentSecondary: '#06b6d4',
+                    success: '#06b6d4',
+                    warning: '#f59e0b',
+                    error: '#ef4444',
+                    bg: '#fafaf8',
+                    text: '#1a1a1a',
+                    headingFont: 'Poppins',
+                    bodyFont: 'Inter',
+                    hasSecondary: true
+                },
+                dark: {
+                    primary: '#fb923c',
+                    accent: '#f472b6',
+                    accentSecondary: '#22d3ee',
+                    success: '#22d3ee',
+                    warning: '#fbbf24',
+                    error: '#f87171',
+                    bg: '#0a0a0a',
+                    text: '#f5f5f5',
+                    headingFont: 'Poppins',
+                    bodyFont: 'Inter',
+                    hasSecondary: true
+                }
+            }
+        };
+
+        // Update theme and mode
+        function updateTheme() {
+            // Remove all classes
+            body.className = '';
+            body.classList.add(`theme-${currentTheme}`);
+            body.classList.add(`mode-${currentMode}`);
+
+            // Get current theme data
+            const themeData = themes[currentTheme][currentMode];
+
+            // Update color codes
+            document.getElementById('primary-code').textContent = themeData.primary;
+            document.getElementById('accent-code').textContent = themeData.accent;
+            document.getElementById('success-code').textContent = themeData.success;
+            document.getElementById('warning-code').textContent = themeData.warning;
+            document.getElementById('error-code').textContent = themeData.error;
+            document.getElementById('bg-code').textContent = themeData.bg;
+            document.getElementById('text-code').textContent = themeData.text;
+
+            // Show/hide secondary accent
+            const secondaryCard = document.getElementById('accent-secondary-card');
+            if (themeData.hasSecondary) {
+                secondaryCard.style.display = 'block';
+                document.getElementById('accent-secondary-code').textContent = themeData.accentSecondary;
+            } else {
+                secondaryCard.style.display = 'none';
+            }
+
+            // Update font names
+            document.getElementById('heading-font-name').textContent = `Font: ${themeData.headingFont}`;
+            document.getElementById('body-font-name').textContent = `Font: ${themeData.bodyFont}`;
+
+            // Update mode indicators
+            const modeEmoji = currentMode === 'light' ? '☀️' : '🌙';
+            document.querySelectorAll('.mode-indicator').forEach(el => {
+                el.textContent = modeEmoji;
+            });
+
+            // Update overview color descriptions and gradients
+            updateOverviewColors();
+        }
+
+        function updateOverviewColors() {
+            const isLight = currentMode === 'light';
+
+            // Toggle color text visibility
+            document.getElementById('current-color-light').style.display = isLight ? 'inline' : 'none';
+            document.getElementById('current-color-dark').style.display = isLight ? 'none' : 'inline';
+            document.getElementById('option1-color-light').style.display = isLight ? 'inline' : 'none';
+            document.getElementById('option1-color-dark').style.display = isLight ? 'none' : 'inline';
+            document.getElementById('option2-color-light').style.display = isLight ? 'inline' : 'none';
+            document.getElementById('option2-color-dark').style.display = isLight ? 'none' : 'inline';
+
+            // Update gradient colors
+            if (isLight) {
+                document.getElementById('current-gradient').style.background = 'linear-gradient(135deg, #3b82f6, #10b981)';
+                document.getElementById('option1-gradient').style.background = 'linear-gradient(135deg, #a855f7, #e729ff)';
+                document.getElementById('option2-gradient').style.background = 'linear-gradient(135deg, #f97316, #ec4899)';
+            } else {
+                document.getElementById('current-gradient').style.background = 'linear-gradient(135deg, #60a5fa, #34d399)';
+                document.getElementById('option1-gradient').style.background = 'linear-gradient(135deg, #c084fc, #f0abfc)';
+                document.getElementById('option2-gradient').style.background = 'linear-gradient(135deg, #fb923c, #f472b6)';
+            }
+        }
+
+        // Theme switching
+        themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentTheme = btn.dataset.theme;
+
+                // Update active button
+                themeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                updateTheme();
+            });
+        });
+
+        // Mode toggle
+        modeToggle.addEventListener('click', () => {
+            currentMode = currentMode === 'light' ? 'dark' : 'light';
+
+            // Update toggle button
+            if (currentMode === 'dark') {
+                modeIcon.textContent = '☀️';
+                modeText.textContent = 'Light Mode';
+            } else {
+                modeIcon.textContent = '🌙';
+                modeText.textContent = 'Dark Mode';
+            }
+
+            updateTheme();
+        });
+
+        // Section switching
+        sectionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sectionId = btn.dataset.section;
+
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+                // Show target section
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Initialize
+        updateTheme();
+    </script>
+</body>
+</html>
