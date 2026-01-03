@@ -4,7 +4,13 @@
 
 ## 公開URL
 
+**推奨URL（SEO最適化版）:**
+https://mokasz.github.io/narration-studio/gengo-flashcards.html
+
+**旧URL（引き続き利用可能）:**
 https://mokasz.github.io/narration-studio/flashcards.html
+
+> 💡 両方のURLから同じコンテンツにアクセスできます。新しいURLは検索エンジン最適化（SEO）のために「gengo（元号）」というキーワードを含んでいます。
 
 ## 機能
 
